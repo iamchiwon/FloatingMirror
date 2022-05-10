@@ -10,10 +10,16 @@ import Cocoa
 class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.wantsLayer = true
     }
 
-    override func viewDidAppear() {
+    override func viewWillAppear() {
         view.window?.level = .floating
+        view.window?.isOpaque = false
+        view.window?.backgroundColor = NSColor.red.withAlphaComponent(0.5)
+
+        view.layer?.backgroundColor = NSColor.blue.cgColor
+        view.layer?.cornerRadius = 150
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -22,7 +28,7 @@ class ViewController: NSViewController {
         let startingPoint = event.locationInWindow
 
         window.trackEvents(matching: [.leftMouseDragged, .leftMouseUp], timeout: .infinity, mode: .default) { event, stop in
-            guard let event = event  else { return }
+            guard let event = event else { return }
             switch event.type {
             case .leftMouseUp:
                 NSApp.postEvent(event, atStart: false)
