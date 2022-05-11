@@ -5,12 +5,20 @@
 //  Created by Chiwon Song on 2022/05/10.
 //
 
+import AVFoundation
 import Cocoa
 import RxSwift
 
 class ViewController: NSViewController {
-    weak var runtimeData: RuntimeData!
-    let disposeBag = DisposeBag()
+    private weak var runtimeData: RuntimeData!
+    private let disposeBag = DisposeBag()
+
+    private let cameraSession = AVCaptureSession()
+    private var selectedDevice: AVCaptureDevice!
+
+    private let availableCameras = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera],
+                                                                    mediaType: .video,
+                                                                    position: .front)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +27,11 @@ class ViewController: NSViewController {
 
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.black.cgColor
+
+        cameraSession.sessionPreset = .low
+        if let device = AVCaptureDevice.default(for: .video) {
+            print(device.localizedName)
+        }
 
         binding()
     }
