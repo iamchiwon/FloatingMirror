@@ -6,20 +6,30 @@
 //
 
 import Cocoa
+import RxSwift
 
 class ViewController: NSViewController {
+    weak var runtimeData: RuntimeData!
+    let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        runtimeData = (NSApplication.shared.delegate as? AppDelegate)?.runtimeData
+
         view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.black.cgColor
+
+        binding()
     }
 
-    override func viewWillAppear() {
-        view.window?.level = .floating
-        view.window?.isOpaque = false
-        view.window?.backgroundColor = NSColor.red.withAlphaComponent(0.5)
-
-        view.layer?.backgroundColor = NSColor.blue.cgColor
-        view.layer?.cornerRadius = 150
+    private func binding() {
+        runtimeData.windowSize
+            .map { $0 / 2 }
+            .subscribe(onNext: { [weak self] size in
+                self?.view.layer?.cornerRadius = size
+            })
+            .disposed(by: disposeBag)
     }
 
     override func mouseDown(with event: NSEvent) {
