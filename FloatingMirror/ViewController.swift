@@ -14,11 +14,7 @@ class ViewController: NSViewController {
     private let disposeBag = DisposeBag()
 
     private let cameraSession = AVCaptureSession()
-    private var selectedDevice: AVCaptureDevice!
-
-    private let availableCameras = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera],
-                                                                    mediaType: .video,
-                                                                    position: .front)
+    private var previewLayer: AVCaptureVideoPreviewLayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +24,12 @@ class ViewController: NSViewController {
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.black.cgColor
 
-        cameraSession.sessionPreset = .low
-        if let device = AVCaptureDevice.default(for: .video) {
-            print(device.localizedName)
-        }
+        requestPermission()
+            .filter { $0 }
+            .subscribe(onNext: { [weak self] _ in
+                self?.setupCameraPreview()
+            })
+            .disposed(by: disposeBag)
 
         binding()
     }
@@ -43,6 +41,39 @@ class ViewController: NSViewController {
                 self?.view.layer?.cornerRadius = size
             })
             .disposed(by: disposeBag)
+    }
+
+    private func setupCameraPreview() {
+    }
+
+    private func requestPermission() -> Observable<Bool> {
+        return Observable.create { emitter in
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized: // The user has previously granted access to the camera.
+                emitter.onNext(true)
+                emitter.onCompleted()
+
+            case .notDetermined: // The user has not yet been asked for camera access.
+                AVCaptureDevice.requestAccess(for: .video) { granted in
+                    emitter.onNext(granted)
+                    emitter.onCompleted()
+                }
+
+            case .denied: // The user has previously denied access.
+                emitter.onNext(false)
+                emitter.onCompleted()
+
+            case .restricted: // The user can't grant access due to restrictions.
+                emitter.onNext(false)
+                emitter.onCompleted()
+
+            default:
+                emitter.onCompleted()
+                break
+            }
+
+            return Disposables.create()
+        }
     }
 
     override func mouseDown(with event: NSEvent) {
