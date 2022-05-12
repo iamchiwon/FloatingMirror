@@ -38,12 +38,32 @@ class ViewController: NSViewController {
         runtimeData.windowSize
             .map { $0 / 2 }
             .subscribe(onNext: { [weak self] size in
-                self?.view.layer?.cornerRadius = size
+                guard let self = self else { return }
+                self.previewLayer.frame = self.view.bounds
+                self.view.layer?.cornerRadius = size
             })
             .disposed(by: disposeBag)
     }
 
     private func setupCameraPreview() {
+        guard let device = AVCaptureDevice.default(for: .video),
+        let input = try? AVCaptureDeviceInput(device: device) else { return }
+        
+        cameraSession.sessionPreset = .low
+        cameraSession.addInput(input)
+
+        previewLayer = AVCaptureVideoPreviewLayer(session: cameraSession)
+        previewLayer.frame = view.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        view.layer?.addSublayer(previewLayer)
+    }
+    
+    override func viewDidAppear() {
+        cameraSession.startRunning()
+    }
+    
+    override func viewWillDisappear() {
+        cameraSession.stopRunning()
     }
 
     private func requestPermission() -> Observable<Bool> {
