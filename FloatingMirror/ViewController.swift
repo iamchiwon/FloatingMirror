@@ -56,6 +56,11 @@ class ViewController: NSViewController {
         previewLayer.frame = view.bounds
         previewLayer.videoGravity = .resizeAspectFill
         view.layer?.addSublayer(previewLayer)
+        
+        if let connection = previewLayer.connection, connection.isVideoMirroringSupported {
+            connection.automaticallyAdjustsVideoMirroring = false
+            connection.isVideoMirrored = true
+        }
     }
     
     override func viewDidAppear() {
