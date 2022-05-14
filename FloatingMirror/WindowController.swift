@@ -20,7 +20,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         window?.delegate = self
         window?.level = .floating
         window?.isOpaque = false
-        window?.backgroundColor = NSColor.white.withAlphaComponent(0.01)
+        window?.backgroundColor = NSColor.white.withAlphaComponent(0.00)
     }
 
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {

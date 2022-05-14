@@ -14,7 +14,7 @@ class ViewController: NSViewController {
     private let disposeBag = DisposeBag()
 
     private let cameraSession = AVCaptureSession()
-    private var previewLayer: AVCaptureVideoPreviewLayer!
+    private var previewLayer: AVCaptureVideoPreviewLayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +36,10 @@ class ViewController: NSViewController {
 
     private func binding() {
         runtimeData.windowSize
-            .map { $0 / 2 }
             .subscribe(onNext: { [weak self] size in
                 guard let self = self else { return }
-                self.previewLayer.frame = self.view.bounds
-                self.view.layer?.cornerRadius = size
+                self.previewLayer?.frame = CGRect(x: 0, y: 0, width: size, height: size)
+                self.view.layer?.cornerRadius = size / 2
             })
             .disposed(by: disposeBag)
     }
@@ -49,15 +48,17 @@ class ViewController: NSViewController {
         guard let device = AVCaptureDevice.default(for: .video),
         let input = try? AVCaptureDeviceInput(device: device) else { return }
         
-        cameraSession.sessionPreset = .low
+        cameraSession.sessionPreset = .high
         cameraSession.addInput(input)
 
         previewLayer = AVCaptureVideoPreviewLayer(session: cameraSession)
-        previewLayer.frame = view.bounds
-        previewLayer.videoGravity = .resizeAspectFill
-        view.layer?.addSublayer(previewLayer)
+        if let preview = previewLayer {
+            view.layer?.addSublayer(preview)
+            preview.videoGravity = .resizeAspectFill
+            preview.frame = view.bounds
+        }
         
-        if let connection = previewLayer.connection, connection.isVideoMirroringSupported {
+        if let connection = previewLayer?.connection, connection.isVideoMirroringSupported {
             connection.automaticallyAdjustsVideoMirroring = false
             connection.isVideoMirrored = true
         }
