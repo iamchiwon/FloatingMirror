@@ -36,6 +36,7 @@
 		A127112E282AADBD00536E66 /* FloatingMirror.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FloatingMirror.entitlements; sourceTree = "<group>"; };
 		A1271133282AADBD00536E66 /* FloatingMirrorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FloatingMirrorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1271137282AADBD00536E66 /* FloatingMirrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingMirrorTests.swift; sourceTree = "<group>"; };
+		A1839655283022E2002EB52F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A1A6F9B9282BF7F900FD64EE /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		A1A6F9C2282BFB4700FD64EE /* RuntimeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +81,7 @@
 		A1271124282AADB900536E66 /* FloatingMirror */ = {
 			isa = PBXGroup;
 			children = (
+				A1839655283022E2002EB52F /* Info.plist */,
 				A1271125282AADB900536E66 /* AppDelegate.swift */,
 				A1A6F9C2282BFB4700FD64EE /* RuntimeData.swift */,
 				A1A6F9B9282BF7F900FD64EE /* WindowController.swift */,
@@ -361,6 +363,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FloatingMirror/FloatingMirror.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -368,6 +371,7 @@
 				DEVELOPMENT_TEAM = 77YZ9248DM;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FloatingMirror/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to capture your face.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -380,6 +384,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.appfried.floatingmirror.FloatingMirror;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -391,6 +396,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = FloatingMirror/FloatingMirror.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -398,6 +404,7 @@
 				DEVELOPMENT_TEAM = 77YZ9248DM;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FloatingMirror/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to capture your face.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -410,6 +417,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.appfried.floatingmirror.FloatingMirror;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
